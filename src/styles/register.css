@@ -1,0 +1,21 @@
+.gridContRegis{
+    margin-left: auto !important;
+    margin-top: auto !important;
+}
+.textFieldRgs{
+    text-align: end !important;
+}
+
+.formCONT{
+    width: 50% !important;
+}
+@media (max-width: 1000px) {
+    .formCONT{
+        width: 65% !important;
+    }
+}
+@media (max-width: 600px) {
+    .formCONT{
+        width: 85% !important;
+    }
+}

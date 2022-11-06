@@ -1,0 +1,60 @@
+.navbar-nav{
+    display: flex;
+    justify-content: end;
+    align-content: center;
+    margin-right: 20px;
+
+}
+
+.navbar-collapse{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 70px;
+    background-color: #303d5b;
+    width: 100% !important;
+    background-image: linear-gradient(400deg, rgba(0, 0, 0, 0.55) 50%, #5e6f3400) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    background-blend-mode: multiply;
+    color: white !important;
+}
+.nav-item{
+    margin: 10px 10px;
+}
+
+.cantainer_head{
+    padding: 0px !important;
+    max-width: 100% !important;
+}
+
+a{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.col-solicitud{
+    background-image: linear-gradient(86deg, rgb(0 0 0) 1%, #8888885c) !important ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    background-blend-mode: multiply;
+    color: white !important;
+}
+
+@media (max-width: 768px){
+    .primer_servicio{
+        height: 620px !important;
+    }
+    .ultimo_serv{
+        height: 434px !important;
+    }
+    .fondo{
+        height: 420px !important;
+    }
+    .titulo-fondo{
+        bottom: 4.8rem;
+        height: 32%;
+    }
+}

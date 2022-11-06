@@ -1,0 +1,9 @@
+.boxStackAler{
+    position: absolute;
+    top: 20%;
+    width: 90% !important;
+    left: 5%;
+}
+.headerAlert{
+    text-align: left !important;
+}

@@ -1,0 +1,6 @@
+.row_table{
+    display: flex;
+}
+.col_table{
+    width: 50%;
+}

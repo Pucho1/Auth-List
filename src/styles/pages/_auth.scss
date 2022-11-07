@@ -1,0 +1,71 @@
+.generalGridAut{
+    margin-top: 19% !important;
+}
+.formContrAuth{
+    width: 35% ;
+}
+.btnAuth{
+    border-radius: 20px !important;
+}
+.pError{
+    font-size: 0.8em !important;
+    margin: 3px 0px;
+    color: red;
+}
+
+
+@media (min-width: 100px) {
+    .boxStackAler{
+        top: 15% !important;
+    }
+    .formGrid{
+        padding-top: 10px !important;
+    }
+    .generalGridAut{
+        margin-top: 31% !important;
+    }
+    .gridFormControl{
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+    .formContrAuth{
+        width: 100% ;
+    }
+}
+
+@media (min-width: 425px){
+
+    .formContrAuth{
+        width: 300px !important;
+    }
+
+    .css-4ds8p1-MuiGrid-root>.MuiGrid-item {
+        padding-top: 10px !important;
+    }
+    .generalGridAut{
+        margin-top: 19% !important;
+    }
+}
+@media (min-width: 600px) {
+    .formContrAuth{
+        width: 55% !important;
+    }
+}
+
+@media (min-width: 1200px){
+
+    .css-4ds8p1-MuiGrid-root>.MuiGrid-item {
+        padding-top: 10px !important;
+    }
+    .formContrAuth{
+        width: 375px !important;
+    }
+    .generalGridAut{
+        margin-top: 19% !important;
+    }
+}
+
+
+
+
+

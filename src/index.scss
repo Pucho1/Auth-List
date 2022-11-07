@@ -1,0 +1,19 @@
+/* Base */
+@import './styles/base/reseet';
+@import './styles/base/base';
+
+/* Abstracts*/
+@import './styles/abstracts/variables';
+
+/* Componets*/
+@import './styles/componets/error';
+@import './styles/componets/header';
+@import './styles/componets/tables';
+@import './styles/componets/layout';
+@import './styles/pages/card';
+@import './styles/sppiner/sppiner';
+
+/* Pages*/
+@import './styles/pages/auth';
+@import './styles/pages/register';
+@import './styles/pages/update';

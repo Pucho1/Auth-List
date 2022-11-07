@@ -1,9 +1,0 @@
-.formContrAuth{
-    width: 80% !important;
-}
-
-@media (max-width: 600px) {
-    .formContrAuth{
-        width: 85% !important;
-    }
-}

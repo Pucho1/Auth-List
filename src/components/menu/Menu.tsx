@@ -10,6 +10,7 @@ import { AxiosResponse } from 'axios';
 import TransitionsModal from '../../components/modal/ModalUI';
 import FormsUpdate from '../../components/forms/FormsUpdate';
 import Card from '../card/Card'
+// import { useGetAll } from '../../hooks/useGetAll';
 
 export default function BasicMenu(props: any) {
 
@@ -17,6 +18,7 @@ export default function BasicMenu(props: any) {
   const open = Boolean(anchorEl);
   const [openForm, setOpenForm] = useState<boolean>(false);
   const [isForm, setisForm] = useState<number>();
+  //const { all } = useGetAll();
   // const [userId, setUserId] = useState<any>();
   // const [fila, setFila] = useState();
 
@@ -27,24 +29,7 @@ export default function BasicMenu(props: any) {
     setAnchorEl(null);
   };
 
-  const getAll = () =>{
-    userService.getAllUser()
-    .then((listUser: AxiosResponse) => {
-      if (listUser.status === 204) {
-        // console.log('dentro del if', listUser.data.items.length);
-        props.setuserList(listUser.data.items);
-      } else {
-        // console.log('este es malo arreglo vacio', listUser.data);
-        props.setuserList(listUser.data.items);
-        //setLoading(false);
-      }
-    })
-    .catch((e: any) => {
-      console.log('es del cath', e.message);
-    });
-  };
-
-  const changeHandler = () => {
+  const changeHandlerUpdate = () => {
     setOpenForm(true);
     setAnchorEl(null);
     setisForm(1);
@@ -61,6 +46,23 @@ export default function BasicMenu(props: any) {
     // props.setFila(props.row);
   };
 
+  const getAll = () =>{
+    userService.getAllUser()
+    .then((listUser: AxiosResponse) => {
+      if (listUser.status === 204) {
+        console.log('dentro del if', listUser.data.items.length);
+        props.setuserList(listUser.data.items);
+      } else {
+        console.log('este es malo arreglo vacio', listUser.data);
+        props.setuserList(listUser.data.items);
+      }
+    })
+    .catch((e: any) => {
+      console.log('es del cath', e.message);
+    });
+  };
+  // console.log('este es el hocck', all);
+
   const deleteUser = (row: any) => {
     userService.deleteUser(row.id)
       .then((servidata: AxiosResponse) => {
@@ -68,15 +70,13 @@ export default function BasicMenu(props: any) {
             getAll();
             handleClose()
         } else {
-          console.log('este es malo', servidata.data);
+          // console.log('este es malo', servidata.data);
           //setLoading(true);
-          
         }
       })
       .catch((e) => {
         alert(e);
         console.log('Compras', e);
-        // setuserList(userList);
       });
   };
 
@@ -104,7 +104,7 @@ export default function BasicMenu(props: any) {
             Delete
         </MenuItem>
 
-        <MenuItem onClick={changeHandler}>Update</MenuItem>
+        <MenuItem onClick={changeHandlerUpdate}>Update</MenuItem>
 
         <MenuItem onClick={changeHandlerCard}>user</MenuItem>
       </Menu>
@@ -113,12 +113,14 @@ export default function BasicMenu(props: any) {
         openForm={openForm}
         setOpenForm={setOpenForm}
         title={isForm === 1 ? 'Update' : null}
+        isForm={isForm}
       >
         {isForm === 1 ? (
           <FormsUpdate
             setOpenForm={setOpenForm}
-            buttonName='Udate'
+            buttonName='Update'
             fila={props.row}
+            getAll={getAll}
           />
         ) : (
           <Card user={props.row}/>

@@ -1,0 +1,12 @@
+a{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+@media (max-width: 425px) {
+    
+    .MuiContainer-root{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}

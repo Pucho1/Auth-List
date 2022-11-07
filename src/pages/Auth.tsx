@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
-import { Container, Grid, FormControl } from "@mui/material";
-import { Navigate, Link } from 'react-router-dom';
+import { Container, Grid, FormControl, Box, Avatar } from "@mui/material";
 import { useForm, Controller } from 'react-hook-form';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Button } from '@mui/material';
 import  AuthService  from '../services/AuthService';
@@ -12,9 +9,8 @@ import { addToken } from '../api/api';
 import { useAuthStore } from '../store/AuthContext';
 import { IFormInputUser, ResponseUserLogin } from '../types/Types';
 import  { useNavigate }  from "react-router-dom";
-import HandleError from '../components/errores/HandleError';
-import '../styles/auth.css';
-
+import ing from '../images/gestion user.jpg';
+import Notification from '../components/errores/Notification';
 // import { addToken } from '../api/api';
 // import Logout from './Logout/Logout';
 
@@ -26,8 +22,7 @@ export default function Auth(props: any) {
   const [openError, setOpenError] = useState(false);
   const navegate = useNavigate();
   const authStore = useAuthStore();
-  // const password = useRef({});
-  // password.current = watch('password', '');
+
 
   // envio datos para su verificacion
   const authSuccess = (dataUser: ResponseUserLogin) => {
@@ -52,7 +47,7 @@ export default function Auth(props: any) {
   const checkAuthTimeout = (expirationTime: number) => {
     console.log('estoy llamaando al deslogueo');
     setTimeout(() => {
-      props.history.push('/logout');
+      navegate("/user");
     }, expirationTime * 10000);
   };
 
@@ -62,9 +57,9 @@ export default function Auth(props: any) {
     AuthService.login(data.email, data.password)
       .then((response: any) => {
         if (response.status === 200) {
-          // almaceno el token en la seccion
           checkAuthTimeout(1000);
           authSuccess(response.data);
+           console.log(response, 'no entro');
           setMsgError(response.message);
           setOpenError(true);
         } else {
@@ -74,79 +69,105 @@ export default function Auth(props: any) {
         }
       })
       .catch((e: any) => {
-          setOpenError(true);
           setMsgError(e.message);
+          setOpenError(true);
       });
     };
 
-    console.log(msgError, 'este es el error de la llamada');
-  
   return (
-    <Container fixed id="container-register" sx={{ minHeight: "100vh"}}>
-      <HandleError open={openError} setOpenError={setOpenError} msgError={msgError}/>
+    <Container fixed id="container-form">
+      <Notification open={openError} setOpenError={setOpenError} msg={msgError}/>
       <Grid
-        display='flex'
-        sx={{minHeight:'100vh'}}
+        className="center generalGridAut"
+        item
         container
-        spacing={2}
-        justifyContent='center'
-        alignItems='center'
+        // spacing={2}
+        rowSpacing={{xs: 4, md: 4, lg: 5}}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container>
-            <Grid item xs={12} margin='50px'>
-              <FormControl className="formContrAuth" sx={{ width: '25ch' }}>
-                <InputLabel htmlFor="component-disabled">Email</InputLabel>
-                <Controller
-                  //name="email"
-                  control={control}
-                  {...register("email", { required: "Email Address is required" })} 
-                      aria-invalid={errors.email ? "true" : "false"}
-                  render={({ field }) => (
-                    <Input
-                      { ...field}
-                      name="email"
-                      id="component-disabled"
-                      // required
-                    />
-                  )}
-                />
-                {errors.email && <p role="alert">{errors.email?.message}</p>}
-              </FormControl>
-            </Grid >
-            <Grid item xs={12} margin='35px'>
-              <FormControl className="formContrAuth" sx={{ width: '25ch' }}>
-                <InputLabel htmlFor="component-disabled">Password</InputLabel>
-                <Controller
-                  //name="password"
-                  control={control}
-                  {...register("password", { required: "Password is required" })} 
-                      aria-invalid={errors.password ? "true" : "false"}
+        <Grid className="center boxAvatar" item xs={12}>
+          <Avatar
+            alt="Remy Sharp"
+            src={ing}
+            sx={{ width: 100, height: 100 }}
+          />
+        </Grid>
+        <Grid className="formGrid" item xs={12} margin='6px'>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete='false'>
+            <Grid container>
+              <Grid className="gridFormControl center" item xs={12} margin='16px'>
+                <FormControl className="formContrAuth" >
+                  <Controller
+                    //name="email"
+                    control={control}
+                      {...register("email", { 
+                        required: "Email es requerido",
+                        pattern: {
+                          value: /[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}/,
+                          message:"Direccion de email invalida"
+                      }
+                    })}
+                        aria-invalid={errors.email ? "true" : "false"}
+                    render={({ field }) => (
+                      <TextField
+                        { ...field}
+                        name="email"
+                        id="component-disabled"
+                        label="Email"
+                        size="small"
+                        // required
+                      />
+                    )}
+                  />
+                  {errors.email && <p className="pError" role="alert">{errors.email?.message}</p>}
+                </FormControl>
+              </Grid >
+              <Grid className="gridFormControl center" item xs={12} margin='16px'>
+                <FormControl className="formContrAuth" >
+                  <Controller
+                    //name="password"
+                    control={control}
+                    {...register("password", {
+                        required: "Password es requerida",
+                        minLength: {
+                          value: 5,
+                          message: 'Password debería tener al menos 8 caracteres',
+                        },
+                        maxLength: {
+                          value: 16,
+                          message: 'Password debería tener  menos de 16 caracteres',
+                        },
+                      })}
+                        aria-invalid={errors.password ? "true" : "false"}
 
-                  render={({ field }) => (
-                    <Input
-                      { ...field}
-                      name="password"
-                      type="password"
-                      id="pas"
-                      // required
-                    />
-                  )}
-                />
-                {errors.password && <p role="alert">{errors.password?.message}</p>}
-                <FormHelperText>{null}</FormHelperText>
-              </FormControl>
+                    render={({ field }) => (
+                      <TextField
+                        { ...field}
+                        name="password"
+                        type="password"
+                        id="pas"
+                        // required
+                        label="Password"
+                        size="small"
+
+                      />
+                    )}
+                  />
+                  {errors.password && <p className="pError" role="alert">{errors.password?.message}</p>}
+                  <FormHelperText>{null}</FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid item className='gridBtn center' xs={12} >
+              <Button
+                className="btnAuth"
+                variant="contained"
+                type="submit"
+              >
+                Sing Up
+              </Button>
             </Grid>
-            <Grid item className='gridBtn' xs={12} >
-            <Button
-              variant="contained"
-              type="submit"
-            >
-              Autentiquese
-            </Button>
-          </Grid>
-          </Grid>
-        </form>
+            </Grid>
+          </form>
+        </Grid>
       </Grid>
     </Container>
   );

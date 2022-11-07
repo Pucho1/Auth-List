@@ -15,3 +15,8 @@ export type User = {
     password:string;
     surname:string;
   }
+  export type devolucion= {
+    user:User| undefined;
+    msg: string;
+    error: string;
+  }

@@ -6,7 +6,6 @@ import Col from 'react-bootstrap/esm/Col';
 import userService from '../../services/user/userService';
 import { AxiosResponse } from 'axios';
 
-import '../../styles/tables.css';
 import Menu from '../menu/Menu';
 
 interface DataRow {
@@ -83,34 +82,11 @@ const DTableComponent = (props: any) => {
             <Row className="row_table">
               <Col className="col_table" xs={6}>
                 <Menu
-                  setOpen={ props.setOpen}
-                  getAll={getAll}
                   row={row}
                   index={index}
                   setuserList={setuserList}
                 />
-                {/*<Button
-                  className="buton-option"
-                  //variant=""
-                  onClick={() => {
-                    changeHandler(row, index);
-                    setModalShow(true);
-                    props.setOpen(true);
-                  }}
-                >
-                  Update
-                </Button>*/}
               </Col>
-              {/*<Col className="col_table" xs={6}>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    deleteUser(row);
-                  }}
-                >
-                    Delete
-                </Button>
-                </Col>*/}
             </Row>
           );
         },
@@ -173,7 +149,6 @@ const DTableComponent = (props: any) => {
     <>
       <DataTable
         className="personal-staf-table"
-        title="Google Sheets-esque"
         pagination
         paginationTotalRows={userList.length}
         onChangeRowsPerPage={handlePerRowsChange}

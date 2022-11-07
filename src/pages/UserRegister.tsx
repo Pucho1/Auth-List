@@ -1,76 +1,82 @@
 import React, { useState } from 'react';
-import { Container, Grid, FormControl } from "@mui/material";
+import { Grid, FormControl } from "@mui/material";
 import { useForm, Controller } from 'react-hook-form';
-// import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-// import FormHelperText from '@mui/material/FormHelperText';
 import { Button } from '@mui/material';
 import AuthService  from '../services/AuthService';
 import { IFormInputUser } from '../types/Types';
-import '../styles/register.css';
+import  { useNavigate }  from "react-router-dom";
+import Notification from '../components/errores/Notification';
 
 export default function UserRegister(props: any) {
   const { handleSubmit, register, control, formState: { errors }} = useForm<IFormInputUser>();
   const [msgError, setMsgError] = useState('');
-/*const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { isDirty, isValid },
-  } = useForm<IFormInputs>({ mode: 'onChange' });*/
-  
-  //const [msgSuccess, setMsgSuccess] = useState('');
-  //const password = useRef({});
-  // password.current = watch('password', '');
+  const [openError, setOpenError] = useState(false);
+  const [shooseMsg , setShooseMsg]= useState<boolean>();
+  const navegate = useNavigate();
 
+  const redirecDelay = (expirationTime: number) => {
+    console.log('estoy llamaando al redirect');
+    setTimeout(() => {
+      navegate("/");
+    }, expirationTime * 10000);
+  };
+  
   const onSubmit = async (data: any) => {
     AuthService.register(data)
       .then((res:any) => {
         if (res.data.code === 500) {
           setMsgError(`${res.data.message}`);
-          //setMsgSuccess('');
+          console.log('el error es ',res.data.message);
+          setShooseMsg(false);
+          setOpenError(true);
           return;
         }
-        //setMsgSuccess('Se ha creado la cuenta correctamente active su cuenta');
-        setMsgError('');
-
-        props.history.push('/confirmar');
+          setShooseMsg(false);
+          setOpenError(true)
+          redirecDelay(10);
       })
       .catch((e:any) => {
-        //setMsgSuccess('');
-        setMsgError(e.response.data.message);
+          setMsgError(e.message);
+          setShooseMsg(true);
+          setOpenError(true);
       });
   };
   console.log('el error es ',msgError);
-  
+
+
+
   return (
       <Grid
         className='gridContRegis'
-        display='flex'
-        sx={{minHeight:'100vh'}}
         container
         spacing={2}
         justifyContent='center'
         alignItems='center'
       >
+        <Notification open={openError} setOpenError={setOpenError} msg={msgError} shooseMsg={shooseMsg}/>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container xs={12} rowSpacing={{xs: 4, md: 4, lg: 5}} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={12}>
+            <Grid className="center" item xs={12}>
               <FormControl className="formCONT" sx={{ width: '40%', textAlign: 'end' }} >
                 <Controller
                   control={control}
-                  {...register("name", { required: "Name is required" })} 
+                  {...register("name", { 
+                    required: "Name is required",
+                    maxLength: {
+                      value: 16,
+                      message: 'Password debería tener  menos de 16 caracteres',
+                    },
+                   })}
                       aria-invalid={errors.name ? "true" : "false"}
                   render={({ field }) => (
                     <TextField
                       className="textFieldRgs"
                       { ...field}
                       id="name-input"
-                      // required
-                      //size="small"
+                      size="small"
                       label="Name"
-                      variant="standard"
+                      //variant="standard"
                       required
                     />
                   )}
@@ -78,20 +84,26 @@ export default function UserRegister(props: any) {
                 {errors.name && <p role="alert">{errors.name?.message}</p>}
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid className="center" item xs={12}>
               <FormControl className="formCONT" sx={{ width: '40%' }} >
                 <Controller
                     control={control}
-                    {...register("surname", { required: "surname is required" })} 
+                    {...register("surname", {
+                       required: "surname is required",
+                       maxLength: {
+                        value: 16,
+                        message: 'Password debería tener  menos de 16 caracteres',
+                      }, 
+                      })} 
                         aria-invalid={errors.surname ? "true" : "false"}
                     render={({ field }) => (
                       <TextField
                         text-align="start"
                         { ...field}
                         id="surname-input"
-                        // required
+                        size="small"
                         label="surname"
-                        variant="standard"
+                        // variant="standard"
                         required
                       />
                     )}
@@ -100,11 +112,21 @@ export default function UserRegister(props: any) {
 
               </FormControl>
             </Grid>
-            <Grid item xs={12} >
+            <Grid className="center" item xs={12} >
               <FormControl className="formCONT" sx={{ width: '40%' }}>
                 <Controller
                   control={control}
-                  {...register("password", { required: "password is required" })} 
+                  {...register("password", {
+                     required: "password is required",
+                     minLength: {
+                      value: 5,
+                      message: 'Password debería tener al menos 8 caracteres',
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: 'Password debería tener  menos de 16 caracteres',
+                    },
+                     })}
                       aria-invalid={errors.password ? "true" : "false"}
                   render={({ field }) => (
                     <TextField
@@ -112,28 +134,33 @@ export default function UserRegister(props: any) {
                       { ...field}
                       type="password"
                       id="password-input"
+                      size="small"
                       label="Password"
-                      variant="standard"
                       required
-                      // required
                     />
                   )}
                 />
                 {errors.password && <p role="alert">{errors.password?.message}</p>}
               </FormControl>
             </Grid>
-            <Grid item xs={12} >
+            <Grid className="center" item xs={12} >
               <FormControl className="formCONT" sx={{ width: '40%' }}>
                 <Controller
                   control={control}
-                  {...register("email", { required: "email is required" })} 
+                  {...register("email", {
+                     required: "email is required",
+                     pattern: {
+                      value: /[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}/,
+                      message:"invalid email addres"
+                    }
+                     })} 
                       aria-invalid={errors.email ? "true" : "false"}
                   render={({ field }) => (
                     <TextField
                       { ...field}
+                      size="small"
                       id="email-input"
                       label="Email"
-                      variant="standard"
                       required
                     />
                   )}
@@ -142,7 +169,7 @@ export default function UserRegister(props: any) {
               </FormControl>
             </Grid>
             
-            <Grid item xs={6}  marginLeft='25%'>
+            <Grid className="center" item xs={6}  marginLeft='25%'>
               <Button
                 martgin-top='35px'
                 variant="contained"

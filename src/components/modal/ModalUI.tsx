@@ -23,8 +23,9 @@ export default function TransitionsModal(props: any) {
     children,
     title,
     openForm,
+    isForm
   } = props;
-  const handleClose = () => props.setOpenForm(!openForm);
+  const handleClose = () => props.setOpenForm(false);
   // console.log(openForm,'demtro el modal');
   return (
     <div>
@@ -41,7 +42,7 @@ export default function TransitionsModal(props: any) {
         }}
       >
         <Fade in={openForm}>
-          <Box className="boxModal" sx={style}>
+          <Box className={isForm === 1 ? "boxModalUpdate" :"boxModalCard"} sx={style}>
             <div className="header_modal">
               <Typography className="titleModal" id="transition-modal-title" variant="h6" component="h2">
                 {title}

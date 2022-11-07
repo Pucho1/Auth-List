@@ -1,0 +1,42 @@
+.card{
+    max-width: auto !important;
+}
+
+.headerCard {
+    background-color: cornflowerblue;
+}
+.cardContentIcon{
+    position: absolute;
+    top: 56px;
+    left: 97px;    
+}
+
+.cardHederAvatar{
+    height: 150px;
+    background-color: cornflowerblue;
+}
+.cardHederotroicon{
+    position: relative;
+    top: -53px;
+}
+.tituloCard{
+    font-size: 1em;
+    top: 19px;
+    position: absolute;
+}
+.boxModalCard{
+    padding: 0px !important;
+    border-radius: 33px !important;
+    border: none !important;
+
+}
+
+@media (max-width: 425px) {
+    .boxModalCard{
+      width: 325px !important;
+    }
+  
+    .cardContentIcon {
+        left: 69px;
+      }
+}

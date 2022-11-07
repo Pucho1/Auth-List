@@ -1,21 +1,43 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CardHeader, Avatar, IconButton  } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { red } from '@mui/material/colors'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import userimg from '../../images/images.png';
+// import nuevo from '../'
 
 export default function ActionAreaCard(props: any) {
   const {user} = props;
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className="card">
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
+        <CardHeader
+          avatar={
+            <Avatar className="cardHederotroicon" sx={{ bgcolor: red[500] }} aria-label="recipe">
+              U
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title= {<h1 className="tituloCard"> user data</h1>}
+          className="cardHederAvatar"
+          //subheader="September 14, 2016"
         />
+        <CardContent className="cardContentIcon center">
+          <Avatar
+            
+            alt="Remy Sharp"
+            src={userimg}
+            sx={{ width: 137, height: 137 }}
+          />
+        </CardContent>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
            <h1>{user.name}</h1>

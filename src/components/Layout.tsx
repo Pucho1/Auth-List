@@ -12,7 +12,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <Header />
-      <Container >
+      <Container className="containerBody">
         {children}
       </Container>
       {/*location.pathname === '/registrar' ||

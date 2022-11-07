@@ -1,6 +1,4 @@
 import React from 'react';
-import './App.css';
-// import './styles/global.scss'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Auth from './pages/Auth';
 import UserManage from './pages/user/UserManage';

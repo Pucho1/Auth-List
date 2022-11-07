@@ -1,5 +1,4 @@
-
-.boxModal{
+.boxModalUpdate{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -15,4 +14,13 @@
 .titleModal{
     position: relative;
     top: -16px;
+}
+
+@media (max-width: 425px) {
+    .titleModal{
+        text-align: center !important;
+    }
+    .boxModalUpdate{
+        width: 225px !important;
+      }
 }

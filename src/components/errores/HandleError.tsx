@@ -6,7 +6,6 @@ import Collapse from '@mui/material/Collapse';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
-import '../../styles/error.css';
 import AlertTitle from '@mui/material/AlertTitle';
 
 const HandleError = (props: any) => {

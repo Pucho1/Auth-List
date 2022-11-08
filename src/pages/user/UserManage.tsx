@@ -1,6 +1,4 @@
-import React, { useEffect, useState} from 'react'; //, { useState, useRef }
-// import userService from '../../services/user/userService';
-import { User } from '../../types/Types';
+import React from 'react'; 
 import DTableComponent from '../../components/tables/DTableComponent';
 import { Grid } from "@mui/material";
 

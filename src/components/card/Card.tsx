@@ -1,14 +1,11 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardHeader, Avatar, IconButton  } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { red } from '@mui/material/colors'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import userimg from '../../images/images.png';
-// import nuevo from '../'
 
 export default function ActionAreaCard(props: any) {
   const {user} = props;
@@ -28,7 +25,6 @@ export default function ActionAreaCard(props: any) {
           }
           title= {<h1 className="tituloCard"> user data</h1>}
           className="cardHederAvatar"
-          //subheader="September 14, 2016"
         />
         <CardContent className="cardContentIcon center">
           <Avatar

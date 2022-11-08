@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Grid, FormControl, Box, Avatar } from "@mui/material";
+import { Container, Grid, FormControl, Avatar } from "@mui/material";
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -11,39 +11,22 @@ import { IFormInputUser, ResponseUserLogin } from '../types/Types';
 import  { useNavigate }  from "react-router-dom";
 import ing from '../images/gestion user.jpg';
 import Notification from '../components/errores/Notification';
-// import { addToken } from '../api/api';
-// import Logout from './Logout/Logout';
 
 export default function Auth(props: any) {
 
   const { handleSubmit, register, control, formState: { errors }} = useForm<IFormInputUser>();
   const [msgError, setMsgError,] = useState('');
-  const [status, setStatus] = useState('');
   const [openError, setOpenError] = useState(false);
   const navegate = useNavigate();
   const authStore = useAuthStore();
 
-
-  // envio datos para su verificacion
   const authSuccess = (dataUser: ResponseUserLogin) => {
     authStore.setToken(dataUser.accessToken);
     sessionStorage.setItem('accessToken', dataUser.accessToken);
-    // authStore.setUserReg(dataUser);
     addToken(dataUser.accessToken);
     navegate("/user");
-    // muestro la pagina si es admin
-    /*if (dataUser.user.permission.find((x) => x === 1)) {
-      props.history.push('/dashboard');
-    } else if (localStorage.getItem('lastPath')) {
-      props.history.push(localStorage.getItem('/admin/usuarios'));
-    } else {
-
-    }*/
-    //return history("/user");
   };
-  // limpio todos los datos de la seccion y el user
 
-  // manejo los tiempos para el deslogueo obligatorio
   const checkAuthTimeout = (expirationTime: number) => {
     console.log('estoy llamaando al deslogueo');
     setTimeout(() => {
@@ -51,26 +34,20 @@ export default function Auth(props: any) {
     }, expirationTime * 10000);
   };
 
-  // obtengo los datos enviados desde la base de datos ---token---
-  // se tienen que enviar mas datos del usuario
   const onSubmit = (data: any) => {
     AuthService.login(data.email, data.password)
       .then((response: any) => {
         if (response.status === 200) {
           checkAuthTimeout(1000);
           authSuccess(response.data);
-           console.log(response, 'no entro');
-          setMsgError(response.message);
-          setOpenError(true);
         } else {
           setMsgError(response.message);
           setOpenError(true);
-          console.log(response, 'no entro');
         }
       })
       .catch((e: any) => {
-          setMsgError(e.message);
-          setOpenError(true);
+        e.code === "ERR_NETWORK" ? setMsgError(e.message) : setMsgError(e.response.data.message);
+        setOpenError(true);
       });
     };
 
@@ -81,7 +58,6 @@ export default function Auth(props: any) {
         className="center generalGridAut"
         item
         container
-        // spacing={2}
         rowSpacing={{xs: 4, md: 4, lg: 5}}
       >
         <Grid className="center boxAvatar" item xs={12}>
@@ -97,7 +73,6 @@ export default function Auth(props: any) {
               <Grid className="gridFormControl center" item xs={12} margin='16px'>
                 <FormControl className="formContrAuth" >
                   <Controller
-                    //name="email"
                     control={control}
                       {...register("email", { 
                         required: "Email es requerido",
@@ -114,7 +89,6 @@ export default function Auth(props: any) {
                         id="component-disabled"
                         label="Email"
                         size="small"
-                        // required
                       />
                     )}
                   />
@@ -124,7 +98,6 @@ export default function Auth(props: any) {
               <Grid className="gridFormControl center" item xs={12} margin='16px'>
                 <FormControl className="formContrAuth" >
                   <Controller
-                    //name="password"
                     control={control}
                     {...register("password", {
                         required: "Password es requerida",
@@ -145,7 +118,6 @@ export default function Auth(props: any) {
                         name="password"
                         type="password"
                         id="pas"
-                        // required
                         label="Password"
                         size="small"
 

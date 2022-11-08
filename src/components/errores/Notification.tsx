@@ -12,8 +12,8 @@ export default function Nonitification(props: any) {
   const navegate = useNavigate();
 
   const handleClose = () => {
-    shooseMsg && navegate('/');
     props.setOpenError(false);
+    shooseMsg === false && navegate('/');
   };
 
   return (
@@ -29,7 +29,7 @@ export default function Nonitification(props: any) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {shooseMsg ? msg : "!!Se ha registrado correctamente¡¡"}
+            {shooseMsg ? msg : "!!Successfully registered¡¡"}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

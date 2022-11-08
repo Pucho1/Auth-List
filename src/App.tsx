@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Auth from './pages/Auth';
 import UserManage from './pages/user/UserManage';
 import UserRegister  from './pages/UserRegister';
-import Tes  from './pages/Test';
 import Layout from './components/Layout';
 import { useAuthStore } from './store/AuthContext';
+import { InnerSpinner } from './components/sppiner/sppiner';
 
 const App: React.FC = () =>{
   const authStore = useAuthStore();
@@ -18,7 +18,6 @@ const App: React.FC = () =>{
             <Route path="/register" element={<UserRegister />} />
             {authStore.isAuthenticated ?
             <>
-              <Route path="/test" element={<Tes />} />
               <Route path="/user" element={<UserManage /> } />
             </>
             : null
@@ -28,6 +27,7 @@ const App: React.FC = () =>{
           </Routes>
         </Layout>
       </Router>
+      <InnerSpinner />
     </div>
   );
 }

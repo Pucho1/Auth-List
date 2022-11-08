@@ -1,14 +1,18 @@
 .gridContRegis{
     margin-left: auto !important;
-    margin-top: auto !important;
+    margin-top: 10% !important;
 }
-.textFieldRgs{
+.textFieldRgs {
     text-align: end !important;
 }
 
-.formCONT{
+.formCONT {
     width: 50% !important;
 }
+.contenedorGenral{
+    margin-top: 10% !important;
+}
+
 @media (max-width: 1000px) {
     .formCONT{
         width: 65% !important;

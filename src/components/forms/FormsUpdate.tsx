@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { Container, Grid, FormControl, Alert } from "@mui/material";
+import React from 'react';
+import { Grid, FormControl } from "@mui/material";
 import { useForm, Controller } from 'react-hook-form';
-// import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-// import FormHelperText from '@mui/material/FormHelperText';
 import { AxiosResponse } from 'axios';
 import { Button } from '@mui/material';
 import UserService  from '../../services/user/userService';
@@ -11,18 +8,14 @@ import TextField from '@mui/material/TextField';
 import { IFormInputUser } from '../../types/Types';
 
 export default function FormsUpdate(props: any) {
-  const { fila, isToCreate, buttonName } = props;
+  const { fila, buttonName } = props;
   const { handleSubmit, register, control, formState: { errors }} = useForm<IFormInputUser>();
-  // const [msgError, setMsgError] = useState('');
-  // const [validated, setValidated] = useState(false);
 
   const onSubmit = (data: IFormInputUser) => {
     UserService.updateUser(fila.id, data)
       .then((res:AxiosResponse) => {
       if (res.status === 200) {
-          console.log('estoy e el envio del update ntes del open');
           props.setOpenForm(false);
-          console.log('estoy e el envio del update');
           props.getAll();
       } else {
           props.setErrorMio(res.data.message);
@@ -80,7 +73,6 @@ export default function FormsUpdate(props: any) {
                     label="surname"
                     id="surname-input"
                     size="small"
-                    // required
                   />
                   )}
                 />
@@ -103,7 +95,6 @@ export default function FormsUpdate(props: any) {
                         { ...field}
                         type="password"
                         id="password-input"
-                        // required
                         defaultValue={fila.name}
                         label="Password"
                         size="small"
@@ -125,7 +116,6 @@ export default function FormsUpdate(props: any) {
                   <TextField
                       { ...field}
                       id="email-input"
-                      // required
                       defaultValue={fila.email}
                       label="Email"
                       size="small"

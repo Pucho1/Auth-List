@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import { useAuthStore } from '../store/AuthContext';
-import { Logout } from '@mui/icons-material';
-import { useLogout } from '../hooks/useLogout';
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,12 +14,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-
-const settings = ['Logout'];
+import { useLogout } from '../hooks/useLogout';
 
 function Header() {
   const authStore= useAuthStore();
+  const {logout} = useLogout();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -45,7 +42,6 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
-          {/*LOGO */}
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -64,7 +60,6 @@ function Header() {
               TEST
           </Typography>
            
-           {/* MENU RESPONSIVE */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -112,7 +107,6 @@ function Header() {
               </MenuItem>
             </Menu>
           </Box>
-           {/* LOGO */}    
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -132,7 +126,6 @@ function Header() {
             TEST
           </Typography>
 
-          {/* BOTONES DEL MENU */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
            { !authStore.isAuthenticated ? (
              <>
@@ -160,7 +153,6 @@ function Header() {
             
           </Box>
           
-           {/* ESTO ES EL ICONO DE USUARIO*/}
           {authStore.isAuthenticated && (
              <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -184,11 +176,9 @@ function Header() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem  onClick={logout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>)}
         </Toolbar>
@@ -198,34 +188,3 @@ function Header() {
 }
 
 export default Header;
-      {/*<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto" >
-            <Stack direction="row" spacing={2}>
-              <Button className="boton_header" variant="outlined" >
-                <Link className="link_header" to="/register">register</Link>
-              </Button>
-              <Button className="boton_header" variant="outlined" >
-                <Link to="/">auth</Link>
-              </Button>
-              { authStore.isAuthenticated ? (
-                <>
-                  <Button className="boton_header" variant="outlined" >
-                    <Link to="/user">user</Link>
-                  </Button>
-                  <Button className="boton_header" variant="outlined" onClick={logout}>
-                    <Logout />
-                  </Button>
-                </>
-                ) : null
-              }
-            </Stack>
-          </Nav>
-        </ Navbar.Collapse>
-        </Container>
-            </Navbar>*/}
-
-

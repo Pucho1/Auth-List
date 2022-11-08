@@ -5,7 +5,6 @@ import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import userService from '../../services/user/userService';
 import { AxiosResponse } from 'axios';
-
 import Menu from '../menu/Menu';
 
 interface DataRow {
@@ -18,17 +17,14 @@ const DTableComponent = (props: any) => {
   const [userList, setuserList] = useState<any>([]);
   const [perPage, setPerPage] = useState(30);
   const [loading, setLoading] = useState(false);
-  // const [modalShow, setModalShow] = useState(false);
-  // const [buscar] = useState<string>('');
 
   const getAll = () =>{
     userService.getAllUser()
     .then((listUser: AxiosResponse) => {
       if (listUser.status === 204) {
-        // console.log('dentro del if', listUser.data.items.length);
         setuserList(listUser.data.items);
+        setLoading(true)
       } else {
-        // console.log('este es malo arreglo vacio', listUser.data);
         setuserList(listUser.data.items);
         setLoading(false);
       }
@@ -36,6 +32,7 @@ const DTableComponent = (props: any) => {
     .catch((e: any) => {
       console.log('es del cath', e.message);
     });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -51,11 +48,6 @@ const DTableComponent = (props: any) => {
   const handleOnRowClicked = ( data: DataRow ) => {
     console.log(data);
   }
-
-
-  // Advertencia: precio es un selector de columnas basado en cadenas que ha quedado
-  // obsoleto a partir de la v7 y se eliminará en la v8. En su lugar, utilice una función
-  // de selector, p. Ej. fila => fila [campo] ...
 
   const columns: TableColumn<DataRow>[] = [
     {
@@ -90,7 +82,6 @@ const DTableComponent = (props: any) => {
             </Row>
           );
         },
-        
       },
   ];
   const paginationOptions: PaginationOptions = {
@@ -118,14 +109,12 @@ const DTableComponent = (props: any) => {
     },
     headCells: {
       style: {
-        // '&:not(:last-of-type)': {
         borderRightStyle: 'solid',
         borderRightWidth: '1px',
         borderRightColor: '#e2e2e2',
         background: '#ededed',
         fontWeight: 800,
         fontSize: '16px',
-        // },
       },
     },
     cells: {
@@ -163,7 +152,6 @@ const DTableComponent = (props: any) => {
         highlightOnHover
         onRowClicked={handleOnRowClicked}
         pointerOnHover
-        // actions={actionsMemo}
       />
     </>
   );
@@ -172,7 +160,7 @@ const DTableComponent = (props: any) => {
       <div id="user-config" className="container">
         <Container>
           <Row className="justify-content-sm-center">
-            {loading ? 'Cargando' : table}
+            {loading ? 'Loading' : table}
           </Row>
         </Container>
       </div>

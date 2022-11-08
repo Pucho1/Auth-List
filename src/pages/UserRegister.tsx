@@ -15,8 +15,7 @@ export default function UserRegister(props: any) {
   const [shooseMsg , setShooseMsg]= useState<boolean>();
   const navegate = useNavigate();
 
-  const redirecDelay = (expirationTime: number) => {
-    console.log('estoy llamaando al redirect');
+  const redirectDelay = (expirationTime: number) => {
     setTimeout(() => {
       navegate("/");
     }, expirationTime * 10000);
@@ -27,24 +26,20 @@ export default function UserRegister(props: any) {
       .then((res:any) => {
         if (res.data.code === 500) {
           setMsgError(`${res.data.message}`);
-          console.log('el error es ',res.data.message);
           setShooseMsg(false);
           setOpenError(true);
           return;
         }
           setShooseMsg(false);
           setOpenError(true)
-          redirecDelay(10);
+          redirectDelay(1);
       })
       .catch((e:any) => {
-          setMsgError(e.message);
-          setShooseMsg(true);
-          setOpenError(true);
+        e.code === "ERR_NETWORK" ? setMsgError(e.message) : setMsgError(e.response.data.message);
+        setShooseMsg(false);
+        setOpenError(true);
       });
   };
-  console.log('el error es ',msgError);
-
-
 
   return (
       <Grid
@@ -56,12 +51,12 @@ export default function UserRegister(props: any) {
       >
         <Notification open={openError} setOpenError={setOpenError} msg={msgError} shooseMsg={shooseMsg}/>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container xs={12} rowSpacing={{xs: 4, md: 4, lg: 5}} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid className="" container xs={12} rowSpacing={{xs: 4, md: 4, lg: 5}} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid className="center" item xs={12}>
-              <FormControl className="formCONT" sx={{ width: '40%', textAlign: 'end' }} >
+              <FormControl className="formCONT" sx={{ width: '40%' }} >
                 <Controller
                   control={control}
-                  {...register("name", { 
+                  {...register("name", {
                     required: "Name is required",
                     maxLength: {
                       value: 16,
@@ -76,12 +71,11 @@ export default function UserRegister(props: any) {
                       id="name-input"
                       size="small"
                       label="Name"
-                      //variant="standard"
                       required
                     />
                   )}
                 />
-                {errors.name && <p role="alert">{errors.name?.message}</p>}
+                {errors.name && <p className="pError" role="alert">{errors.name?.message}</p>}
               </FormControl>
             </Grid>
             <Grid className="center" item xs={12}>
@@ -103,12 +97,11 @@ export default function UserRegister(props: any) {
                         id="surname-input"
                         size="small"
                         label="surname"
-                        // variant="standard"
                         required
                       />
                     )}
                   />
-                {errors.surname && <p role="alert">{errors.surname?.message}</p>}
+                {errors.surname && <p className="pError" role="alert">{errors.surname?.message}</p>}
 
               </FormControl>
             </Grid>
@@ -140,7 +133,7 @@ export default function UserRegister(props: any) {
                     />
                   )}
                 />
-                {errors.password && <p role="alert">{errors.password?.message}</p>}
+                {errors.password && <p className="pError" role="alert">{errors.password?.message}</p>}
               </FormControl>
             </Grid>
             <Grid className="center" item xs={12} >
@@ -165,15 +158,16 @@ export default function UserRegister(props: any) {
                     />
                   )}
                 />
-                {errors.email && <p role="alert">{errors.email?.message}</p>}
+                {errors.email && <p className="pError" role="alert">{errors.email?.message}</p>}
               </FormControl>
             </Grid>
-            
+
             <Grid className="center" item xs={6}  marginLeft='25%'>
               <Button
                 martgin-top='35px'
                 variant="contained"
                 type="submit"
+                className="btnAuth"
               >
                 Registrarse
               </Button>

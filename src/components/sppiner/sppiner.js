@@ -1,23 +1,17 @@
 import React from 'react';
-import { promiseTrackerHoc } from 'react-promise-tracker';
-import { Audio } from 'react-loader-spinner';
-// import './spinner.css';
+import { usePromiseTracker } from 'react-promise-tracker';
 
-const InnerSpinner = (props) => (
+export const InnerSpinner = (props) => {
 
-  props.trackedPromiseInProgress &&
-  <div className="spinner">
-  {console.log(props, 'estoy ene le spiner')}
-    <Audio
-       height="80"
-       width="80"
-       radius="9"
-       color="green"
-       ariaLabel="loading"
-       wrapperStyle
-       wrapperClass
-    />
-  </div>
-);
+  const { promiseInProgress } = usePromiseTracker();
+    return (
+      (promiseInProgress === true) ?
+      <div className="spinner">
+          <h3>hey I'm hear !!!!</h3>
+      </div>
+      :
+      null
+    )
+};
 
-export const Spinner = promiseTrackerHoc(InnerSpinner);
+// export const Spinner = promiseTrackerHoc(InnerSpinner);

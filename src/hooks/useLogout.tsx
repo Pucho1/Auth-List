@@ -17,8 +17,8 @@ export const useLogout =() =>{
         sessionStorage.removeItem('tok');
         removeBearerToken();
         history('/');
-    }
+    };
 
-    return {logout}
+    return {logout};
 };
    

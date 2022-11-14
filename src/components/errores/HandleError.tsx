@@ -37,7 +37,7 @@ const HandleError = (props: any) => {
           </Collapse>
         </Box>
       </Stack>
-    )
-}
+    );
+};
 
 export default HandleError;

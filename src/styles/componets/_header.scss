@@ -1,3 +1,5 @@
+@use '../abstracts/variables';
+
 .navbar-nav{
     display: flex;
     justify-content: end;
@@ -24,11 +26,10 @@
     margin: 10px 10px;
 }
 
-.cantainer_head{
+.conttainer_header{
     padding: 0px !important;
     max-width: 100% !important;
 }
-
 
 
 .col-solicitud{
@@ -55,3 +56,10 @@
         height: 32%;
     }
 }
+ // $brand-travel
+
+ @media (max-width: 899px){
+    .link_header{
+        color: $brand-facebook !important;
+    }
+ }

@@ -1,0 +1,51 @@
+/*
+===========================================
+==  Paleta de colores  ====================
+===========================================
+*/
+$black: #000;
+$black1: #222;
+$black2: #262626;
+$black3: #333;
+$black4: #1f1f1f;
+
+$brand: #cd0810;
+$brand1: #d81d24;
+$brand2: #e53c27;
+$brand3: #e33226;
+$brand4: #b1040c;
+$brand-disable: #d6a8ab;
+
+//other brands
+$brand-travel: #0f69b2;
+$brand-facebook: #3a599b;
+$brand-gold: #a17946;
+$brand-gold-light: #daa152;
+
+//textos
+$grey: #393d49;
+$grey-medium: #5b5b5b;
+$grey-xmedium: #999;
+$grey-light: #bfbfbf;
+$grey-xlight: #dadada;
+$grey-lighter: #ededed;
+
+$selection-text-color: $grey; // color del texto seleccionado
+$body-color: $black; // color del texto por defecto
+$inverse-text-color: #fff; // color para fondos oscuros
+$white: #fff; // color para fondos oscuros
+
+//colores para form
+$ok: #337e2c;
+$warning: #d37f15;
+$error: #cd0810;
+$focus: #b8d4f4;
+
+$colors: (
+  black: $black,
+  text: $grey,
+  brand: $brand,
+  green: $ok,
+  warning: $ok,
+  error: $error,
+);

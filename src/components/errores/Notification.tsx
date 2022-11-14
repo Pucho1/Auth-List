@@ -40,4 +40,4 @@ export default function Nonitification(props: any) {
       </Dialog>
     </div>
   );
-}
+};

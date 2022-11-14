@@ -5,10 +5,9 @@ import UserManage from './pages/user/UserManage';
 import UserRegister  from './pages/UserRegister';
 import Layout from './components/Layout';
 import { useAuthStore } from './store/AuthContext';
-import { InnerSpinner } from './components/sppiner/sppiner';
 
 const App: React.FC = () =>{
-  const authStore = useAuthStore();
+  const authStore = useAuthStore(); 
 
   return (
     <div className="App">
@@ -27,7 +26,6 @@ const App: React.FC = () =>{
           </Routes>
         </Layout>
       </Router>
-      <InnerSpinner />
     </div>
   );
 }

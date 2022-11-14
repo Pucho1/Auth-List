@@ -9,7 +9,7 @@ import { addToken } from '../api/api';
 import { useAuthStore } from '../store/AuthContext';
 import { IFormInputUser, ResponseUserLogin } from '../types/Types';
 import  { useNavigate }  from "react-router-dom";
-import ing from '../images/gestion user.jpg';
+import ing from '../images/users.jpg';
 import Notification from '../components/errores/Notification';
 
 export default function Auth(props: any) {
@@ -64,7 +64,7 @@ export default function Auth(props: any) {
           <Avatar
             alt="Remy Sharp"
             src={ing}
-            sx={{ width: 100, height: 100 }}
+            sx={{ width: 120, height: 120 }}
           />
         </Grid>
         <Grid className="formGrid" item xs={12} margin='6px'>

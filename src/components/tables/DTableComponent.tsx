@@ -3,9 +3,11 @@ import DataTable, { TableColumn  ,PaginationOptions } from 'react-data-table-com
 import { Container } from "@mui/material";
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
-import userService from '../../services/user/userService';
-import { AxiosResponse } from 'axios';
+// import userService from '../../services/user/userService';
+// import { AxiosResponse } from 'axios';
 import Menu from '../menu/Menu';
+import {useGetAll} from '../../hooks/useGetAll';
+import { InnerSpinner } from '../sppiner/sppiner';
 
 interface DataRow {
     email: string;
@@ -16,14 +18,17 @@ interface DataRow {
 const DTableComponent = (props: any) => {
   const [userList, setuserList] = useState<any>([]);
   const [perPage, setPerPage] = useState(30);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const {listUser, isLoading}= useGetAll();
 
-  const getAll = () =>{
+  console.log(listUser, userList, 'este es el result y despues el user list');
+
+/*  const getAll = () =>{
     userService.getAllUser()
     .then((listUser: AxiosResponse) => {
       if (listUser.status === 204) {
         setuserList(listUser.data.items);
-        setLoading(true)
+        setLoading(true);
       } else {
         setuserList(listUser.data.items);
         setLoading(false);
@@ -34,10 +39,11 @@ const DTableComponent = (props: any) => {
     });
     setLoading(false);
   };
-
+*/
   useEffect(() => {
-    getAll();
-  }, []);
+    setuserList(listUser);
+    setLoading(isLoading);
+  }, [listUser]);
 
   const handlePerRowsChange = async (newPerPage: number) => {
     setLoading(true);
@@ -160,7 +166,7 @@ const DTableComponent = (props: any) => {
       <div id="user-config" className="container">
         <Container>
           <Row className="justify-content-sm-center">
-            {loading ? 'Loading' : table}
+            {loading ?  <InnerSpinner /> : table}
           </Row>
         </Container>
       </div>

@@ -1,33 +1,29 @@
-import React, {useState}  from 'react';
-import UserService  from '../services/user/userService';
+import React, {useState, useEffect}  from 'react';
+import userService  from '../services/user/userService';
 import { AxiosResponse } from 'axios';
-import { devolucion } from '../types/Types';
 
 export const useGetAll =() =>{
-
-    const [ressult, setResult]= useState<any>();
-
-    const all = (): devolucion => {
-        let user: any;
-        let error: string ;
-        let msg: string ;
-
-        UserService.getAllUser()
-        .then((res:AxiosResponse) => {
-        if (res.status === 200) {
-            setResult({ ...ressult, [user]: res.data.items});
-            setResult({ ...ressult, [msg]: 'OK OK'});
-        } else {
-            setResult({ ...ressult, [error]: res.data.message});
-            }
+    const [listUser, setListuser] = useState<any>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    
+      useEffect(() => {
+        userService.getAllUser()
+        .then((listUser: AxiosResponse) => {
+          if (listUser.status === 204) {
+            setListuser(listUser.data.items);
+            setIsLoading(false);
+          } else {
+            setListuser(listUser.data.items);
+            setIsLoading(false);
+          }
         })
         .catch((e: any) => {
-            setResult({ ...ressult, [error]: e.data.message});
+          console.log('es del cath', e.message);
         });
-        return ressult;
-    };
+        setIsLoading(false);
+      }, []);
 
-    console.log(ressult);
-    return {all};
+    console.log('estoy fuera del all');
+    return {listUser, isLoading};
 };
    

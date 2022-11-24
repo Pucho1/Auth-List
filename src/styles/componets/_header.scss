@@ -1,5 +1,21 @@
 @use '../abstracts/variables';
 
+.header_white{
+    a{
+        color: $black1 !important;
+    }
+    background-color: $white !important;
+    color: $black1 !important;
+}
+
+.header_black{
+    a{
+        color: $white !important;
+    }
+    background-color: $black1 !important;
+    color: $white !important;
+}
+
 .navbar-nav{
     display: flex;
     justify-content: end;
@@ -39,6 +55,13 @@
     
     background-blend-mode: multiply;
     color: white !important;
+}
+.switch_dark{
+    padding: 8px !important;
+}
+
+.menu_logout{ 
+    padding-right: $margin-header-right + 10px;
 }
 
 @media (max-width: 768px){

@@ -166,7 +166,7 @@ const DTableComponent = (props: any) => {
       <div id="user-config" className="container">
         <Container>
           <Row className="justify-content-sm-center">
-            {loading ?  <InnerSpinner /> : table}
+            {loading ?  'loading': table}
           </Row>
         </Container>
       </div>

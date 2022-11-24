@@ -11,12 +11,20 @@ import { IFormInputUser, ResponseUserLogin } from '../types/Types';
 import  { useNavigate }  from "react-router-dom";
 import ing from '../images/users.jpg';
 import Notification from '../components/errores/Notification';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
 
 export default function Auth(props: any) {
 
   const { handleSubmit, register, control, formState: { errors }} = useForm<IFormInputUser>();
   const [msgError, setMsgError,] = useState('');
   const [openError, setOpenError] = useState(false);
+  const [pass, setPass] = useState<boolean>(false);
+
   const navegate = useNavigate();
   const authStore = useAuthStore();
 
@@ -50,6 +58,13 @@ export default function Auth(props: any) {
         setOpenError(true);
       });
     };
+  const handleClickShowPassword = () => {
+    setPass(!pass);
+  };
+  
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <Container fixed id="container-form">
@@ -96,7 +111,8 @@ export default function Auth(props: any) {
                 </FormControl>
               </Grid >
               <Grid className="gridFormControl center" item xs={12} margin='16px'>
-                <FormControl className="formContrAuth" >
+                <FormControl className="formContrAuth" variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password" sx={{ top:"-20%"}}>Password</InputLabel>
                   <Controller
                     control={control}
                     {...register("password", {
@@ -113,13 +129,25 @@ export default function Auth(props: any) {
                         aria-invalid={errors.password ? "true" : "false"}
 
                     render={({ field }) => (
-                      <TextField
+                      <OutlinedInput
                         { ...field}
                         name="password"
-                        type="password"
+                        type={pass ? "text" : "password" }
                         id="pas"
                         label="Password"
                         size="small"
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {pass ? <Visibility />  : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
 
                       />
                     )}

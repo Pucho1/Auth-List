@@ -16,12 +16,14 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useLogout } from '../hooks/useLogout';
 import { Grid } from '@mui/material';
+import DarkSwitch from './selects/SelectDark';
 
 function Header() {
   const authStore= useAuthStore();
   const {logout} = useLogout();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [checked, setChecked] =useState(false);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -39,7 +41,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={checked ? "header_white" : "header_black"}>
       <Container className='conttainer_header' maxWidth="xl">
         <Toolbar disableGutters>
           <Grid container>
@@ -165,7 +167,7 @@ function Header() {
                 </Box>
                 
                 {authStore.isAuthenticated && (
-                  <Box sx={{ flexGrow: 0 }}>
+                  <Box sx={{ flexGrow: 0 }} className="menu_logout">
                     <Tooltip title="Open settings">
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -195,11 +197,11 @@ function Header() {
             </Grid>
             <Grid item xs={12} sx={{margin:'10px 0px', paddingLeft: '12px'}}>
               <Box>
-                aqui van los colores 
+                <DarkSwitch checked={checked} setChecked={setChecked}/>
               </Box>
             </Grid>
+
           </Grid>
-          
         </Toolbar>
       </Container>
     </AppBar>

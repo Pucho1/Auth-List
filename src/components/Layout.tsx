@@ -11,6 +11,7 @@ const Layout = ({ children }: Props) => {
     <>
       <Header />
       <Container className="containerBody">
+        estees el children
         {children}
       </Container>
     </>

@@ -1,69 +1,43 @@
-pipeline {
+pipeline{
     agent any
-    
-    environment {
-        // Opcional: variables que quieras exponer
-        REPO_URL = "git@github.com:Pucho1/Auth-List.git"
-        NODE_ENV = "production"
-        SCANNER_HOME = tool 'SonarScanner'   // nombre igual al configurado en Global Tool Configuration
+    environment{
+        PROJECT_NAME="Test-hiberus-login"
+        REPO_URL="git@github.com:Pucho1/Auth-List.git"
+        SCANNER_HOME=tool 'SonarScanner' // Name of the SonarQube Scanner installation in Jenkins
     }
-    
-    stages{
 
-        stage("Checkout"){
-             // Paso git nativo de Jenkins
-             // Solo clona o actualiza, sin borrar todo
-             steps{
-                 echo "📥 Clonando o actualizando el repositorio..."
-                 git branch: "main",
-                    credentialsId: "GitCredentials",
-                    url: "${env.REPO_URL}"
-             }
-        }
-        
-        stage("Install Dependencies") {
-            steps {
-                echo "📦 Instalando dependencias del proyecto..."
-                // npm ci es ideal para entornos de CI (más rápido y limpio que npm install)
-                sh "npm ci || npm install"
+    stages{
+        stage('Checkout'){
+            steps{
+                echo "📥 Clonando o actualizando el repositorio..."
+                git branch: 'main',
+                    credentialsId: 'GitCredentials',
+                    url: "${REPO_URL}"
             }
         }
-        
-        stage("Run Tests") {
-            steps {
-                echo "🧪 Ejecutando tests de React..."
-                // Evita que jest quede esperando input
-                sh "npm test -- --watchAll=false"
+
+        stage('install dependencis'){
+            steps{
+                echo  "📦 Instalando dependencias del proyecto..."
+                sh 'npm ci || npm install'
             }
-            post {
-                always {
-                    echo "✅ Tests finalizados."
-                    // Si usas jest-junit puedes publicar reportes aquí:
-                    // junit "reports/junit/*.xml"
+        }
+
+        stage('Run Tests'){
+            steps{
+                echo "🧪 Ejecutando pruebas unitarias..."
+                sh 'npm test -- --WatchAll=false --coverage'
+            }
+        }
+
+
+        stage('SonarQube Analysis'){
+            steps{
+                echo "🔍 Analizando el código con SonarQube..."
+                withSonarQubeEnv('SonarQube'){ // Name of the SonarQube server configuration in Jenkins
+                    sh "${SCANNER_HOME}/bin/sonar-scanner"
                 }
             }
-        }
-        
-        
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    withSonarQubeEnv('SonarQube') {
-                        sh "${SCANNER_HOME}/bin/sonar-scanner"
-                    }
-                }
-            }
-        }
-    
-        stage("Triget Pipeline"){
-             steps{
-                 script{
-                     build job: "trigered_job", parameters: [
-                        string(name: "NOMBRE_PIPELINE", value: "$JOB_NAME"),
-                        string(name: "ID_JOB", value: "$BUILD_ID")
-                    ]
-                 }
-             }
         }
     }
 }

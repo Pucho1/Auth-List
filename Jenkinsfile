@@ -30,7 +30,6 @@ pipeline{
             }
         }
 
-
         stage('SonarQube Analysis'){
             steps{
                 echo "🔍 Analizando el código con SonarQube..."

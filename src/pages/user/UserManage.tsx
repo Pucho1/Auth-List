@@ -2,7 +2,6 @@ import React from 'react';
 import DTableComponent from '../../components/tables/DTableComponent';
 import { Grid } from "@mui/material";
 
-
 const UserManage = () =>{
   return (
       <Grid

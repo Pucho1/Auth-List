@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment{
         PROJECT_NAME="Test-hiberus-login"
-        REPO_URL="git@github.com:Pucho1/Auth-List.git"
+        REPO_URL="https://github.com/Pucho1/Auth-List.git"
         SCANNER_HOME=tool 'SonarScanner' // Name of the SonarQube Scanner installation in Jenkins
     }
 

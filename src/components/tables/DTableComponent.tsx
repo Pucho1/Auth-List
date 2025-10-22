@@ -23,23 +23,6 @@ const DTableComponent = (props: any) => {
 
   console.log(listUser, userList, 'este es el result y despues el user list');
 
-/*  const getAll = () =>{
-    userService.getAllUser()
-    .then((listUser: AxiosResponse) => {
-      if (listUser.status === 204) {
-        setuserList(listUser.data.items);
-        setLoading(true);
-      } else {
-        setuserList(listUser.data.items);
-        setLoading(false);
-      }
-    })
-    .catch((e: any) => {
-      console.log('es del cath', e.message);
-    });
-    setLoading(false);
-  };
-*/
   useEffect(() => {
     setuserList(listUser);
     setLoading(isLoading);
